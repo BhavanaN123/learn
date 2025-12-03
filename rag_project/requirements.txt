@@ -1,0 +1,4 @@
+langchain-community 
+chromadb 
+sentence-transformers 
+langchain-core 
