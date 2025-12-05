@@ -11,10 +11,11 @@ from langchain_core.documents import Document
 
 # 1. Knowledge Base (The information the RAG system "knows")
 knowledge_base = [
-    "The sun is a star located at the center of our Solar System.",
-    "Mars is known as the Red Planet and is the fourth planet from the Sun.",
-    "Jupiter is the largest planet, famous for its Great Red Spot, a massive storm.",
-    "Venus is the second planet from the Sun, often called Earth's 'sister planet' due to its similar size." # Added one more document
+        "Marie Curie was a physicist and chemist who pioneered research on radioactivity. She was the first woman to win a Nobel Prize.",
+        "Thomas Edison was an American inventor and businessman who developed many devices, most notably the practical electric light bulb and the phonograph.",
+        "Leonardo da Vinci was an Italian polymath of the High Renaissance who is considered one of the greatest painters of all time.",
+        "Ada Lovelace, an English mathematician, is often regarded as the first computer programmer for her work on Charles Babbage's proposed mechanical general-purpose computer, the Analytical Engine."
+        # "hello World!"
 ]
 # Convert the text into a format the vector store understands
 documents = [Document(page_content=text) for text in knowledge_base]
@@ -23,18 +24,18 @@ documents = [Document(page_content=text) for text in knowledge_base]
 # This model converts the text into a list of numbers (a vector/embedding).
 # Sentences with similar meanings will have vectors that are numerically "close" to each other.
 embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
-
+# print(embeddings)
 # 3. Vector Store (The "Indexed Memory")
 # This creates the index where the vector-translated documents are stored.
 vectorstore = Chroma.from_documents(documents, embeddings)
-
+# print(vectorstore)
 print(f"✅ Indexing Complete: {len(documents)} documents stored and vectorized.")
 
 
 # --- STEP 3: RETRIEVAL (Looking up the Answer and Score) ---
 
 # The question we want to ask
-user_query = "What is the biggest planet in space?"
+user_query = "Who developed the electric light bulb and what was his other major invention?"
 print(f"\n--- Searching for the top 3 results for: '{user_query}' ---")
 
 # Search for the top 3 most similar document chunks, returning the score as well.
